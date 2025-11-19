@@ -1,8 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import cookieParser from "cookie-parser";
-import cors from "cors";
 import dotenv from "dotenv";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { rateLimit } from "express-rate-limit";
 import addressRoute from "./routes/address/address.route";
 import adminRoute from "./routes/adminRoutes/auth.route";
@@ -49,15 +48,32 @@ const allowedOrigins = [
   "https://www.trazor.shop",
 ];
 
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? allowedOrigins.join(",")
-        : "http://localhost:5173",
-    credentials: true,
-  })
-);
+// Manual CORS handler to ensure only one origin is set
+app.use((req: Request, res: Response, next: NextFunction): void => {
+  const origin = req.headers.origin;
+
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization, Cookie"
+    );
+    res.setHeader("Access-Control-Expose-Headers", "Set-Cookie");
+
+    // Handle preflight OPTIONS request
+    if (req.method === "OPTIONS") {
+      res.status(204).end();
+      return;
+    }
+  }
+
+  next();
+});
 
 //imit middleware
 const limiter = rateLimit({
