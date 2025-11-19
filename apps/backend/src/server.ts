@@ -46,13 +46,14 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://maalelo.vercel.app",
   "https://trazor.shop",
+  "https://www.trazor.shop",
 ];
 
 app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://www.trazor.shop"
+        ? allowedOrigins.join(",")
         : "http://localhost:5173",
     credentials: true,
   })
