@@ -41,13 +41,11 @@ app.post(
   webhookHandler
 );
 
-const allowedOrigins = ["http://localhost:5173", "https://www.trazor.shop"];
-
-// Manual CORS handler to ensure only one origin is set
+// CORS handler - allows all origins
 app.use((req: Request, res: Response, next: NextFunction): void => {
   const origin = req.headers.origin;
 
-  if (origin && allowedOrigins.includes(origin)) {
+  if (origin) {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader(
