@@ -183,10 +183,10 @@ const ContactPage = () => {
                     Get in touch via email for any inquiries.
                   </p>
                   <a
-                    href="mailto:udayraj.vadeghar@gmail.com"
+                    href="mailto:contact@trazor.shop"
                     className="text-indigo-600 hover:text-indigo-700 text-sm font-medium break-all"
                   >
-                    udayraj.vadeghar@gmail.com
+                    contact@trazor.shop
                   </a>
                 </div>
               </div>
