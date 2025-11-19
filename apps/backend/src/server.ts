@@ -41,12 +41,7 @@ app.post(
   webhookHandler
 );
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://maalelo.vercel.app",
-  "https://trazor.shop",
-  "https://www.trazor.shop",
-];
+const allowedOrigins = ["http://localhost:5173", "https://www.trazor.shop"];
 
 // Manual CORS handler to ensure only one origin is set
 app.use((req: Request, res: Response, next: NextFunction): void => {
